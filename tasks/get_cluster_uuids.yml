@@ -27,8 +27,7 @@
 
 - name: Stash the Cluster UUIDs
   set_fact:
-    cluster_uuids: "{{ cluster_uuids|default([]) + [ {'name': item.spec.name, 'uuid': item.metadata.uuid } ] }}"
-  with_items: "{{ json_clusters_result.json.entities }}"
+    cluster_uuids: "{{ json_clusters_result | json_query('json.entities[*].{name: spec.name, uuid: metadata.uuid}') }}"
 
 - name: Debug | Print cluster name/UUIDs
   debug:

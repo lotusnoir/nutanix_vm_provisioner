@@ -1,7 +1,7 @@
 ---
 #Authorize to the cluster and register a cookie to be used for further API calls
 
-- name: Auth to the cluster 
+- name: nutanix | Auth to the cluster 
   uri:
     url: "{{ api_url_v3 }}/clusters/list"
     body:
@@ -24,6 +24,16 @@
 - name: Debug | Print Auth Cookie
   debug:
     var: login.set_cookie
+  when: global_debug
+
+- name: Debug | Print Auth Cookie
+  debug:
+    var: prism_user
+  when: global_debug
+
+- name: Debug | Print Auth Cookie
+  debug:
+    var: prism_password
   when: global_debug
 
 - name: Set fact for Session Cookie

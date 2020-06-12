@@ -25,8 +25,7 @@
 
 - name: Stash the subnet UUIDs
   set_fact:
-    subnet_uuids: "{{ subnet_uuids|default([]) + [ {'name': item.spec.name, 'uuid': item.metadata.uuid } ] }}"
-  with_items: "{{ json_images_result.json.entities }}"
+    subnet_uuids: "{{ json_images_result | json_query('json.entities[*].{name: spec.name, uuid: metadata.uuid}') }}"
 
 - name: Debug | Print Subnet name/UUIDs
   debug:
